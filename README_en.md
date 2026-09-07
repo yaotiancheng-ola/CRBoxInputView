@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/cocoapods/l/CRBoxInputView.svg?style=flat)](https://cocoapods.org/pods/CRBoxInputView)
 [![Platform](https://img.shields.io/cocoapods/p/CRBoxInputView.svg?style=flat)](https://cocoapods.org/pods/CRBoxInputView)
 
-### [中文文档](https://github.com/CRAnimation/CRBoxInputView#Header_Start) [/ English Document](https://github.com/CRAnimation/CRBoxInputView/blob/master/README_en.md#Header_Start)
+### [中文文档](https://github.com/yaotiancheng-ola/CRBoxInputView#Header_Start) [/ English Document](https://github.com/yaotiancheng-ola/CRBoxInputView/blob/master/README_en.md#Header_Start)
 
 ## Features
 
@@ -20,13 +20,13 @@ CRBoxInputView is suitable for verification codes, passwords, phone numbers, and
 ### CocoaPods
 
 ```ruby
-pod 'CRBoxInputView'
+pod 'CRBoxInputView', '2.0.0'
 ```
 
 ### Swift Package Manager
 
 ```swift
-.package(url: "https://github.com/CRAnimation/CRBoxInputView.git", branch: "master")
+.package(url: "https://github.com/yaotiancheng-ola/CRBoxInputView.git", from: "2.0.0")
 ```
 
 ## Example
