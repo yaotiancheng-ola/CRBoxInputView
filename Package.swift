@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.8
 import PackageDescription
 
 let package = Package(
@@ -13,23 +13,15 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/wei18/Masonry.git", branch: "master")
+        .package(url: "https://github.com/SnapKit/SnapKit.git", exact: "5.7.1")
     ],
     targets: [
         .target(
             name: "CRBoxInputView",
             dependencies: [
-                "Masonry"
+                .product(name: "SnapKit", package: "SnapKit")
             ],
-            path: "PodCode/Classes",
-            publicHeadersPath: ".",
-            cSettings: [
-                .headerSearchPath(".")
-            ],
-            linkerSettings: [
-                .linkedFramework("UIKit"),
-                .linkedFramework("Foundation")
-            ]
+            path: "PodCode/Classes"
         )
     ]
 )
