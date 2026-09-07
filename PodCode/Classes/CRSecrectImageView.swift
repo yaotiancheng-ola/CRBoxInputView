@@ -1,7 +1,6 @@
 import SnapKit
 import UIKit
 
-@objcMembers
 open class CRSecrectImageView: UIView {
     private let lockImageView = UIImageView()
 

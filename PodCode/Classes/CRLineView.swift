@@ -4,7 +4,6 @@ import UIKit
 public let CRColorMaster = UIColor(red: 49.0 / 255.0, green: 51.0 / 255.0, blue: 64.0 / 255.0, alpha: 1)
 public typealias CRLineViewSelectChangeBlock = (CRLineView, Bool) -> Void
 
-@objcMembers
 open class CRLineView: UIView {
     public var lineView = UIView()
     public var selected = false {

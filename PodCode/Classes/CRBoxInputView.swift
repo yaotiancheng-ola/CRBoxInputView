@@ -1,13 +1,13 @@
 import SnapKit
 import UIKit
 
-@objc public enum CRTextEditStatus: Int {
+public enum CRTextEditStatus: Int {
     case idle
     case beginEdit
     case endEdit
 }
 
-@objc public enum CRInputType: Int {
+public enum CRInputType: Int {
     case number
     case normal
     case regex
@@ -23,7 +23,6 @@ public typealias TextDidChangeblock = (String?, Bool) -> Void
 public typealias TextEditStatusChangeblock = (CRTextEditStatus) -> Void
 public typealias TextCustomProcessblock = (String?) -> String
 
-@objcMembers
 open class CRBoxInputView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate {
     public var ifNeedCursor = true
     public private(set) var codeLength = 4 {
@@ -103,13 +102,13 @@ open class CRBoxInputView: UIView, UICollectionViewDataSource, UICollectionViewD
     private var ifNeedBeginEdit = false
     private var valueArr: [String] = []
     private var cellPropertyArr: [CRBoxInputCellProperty] = []
+    private var didBecomeActiveObserver: Any?
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
         initialize()
     }
 
-    @objc(initWithCodeLength:)
     public convenience init(codeLength: Int) {
         self.init(frame: .zero)
         self.codeLength = codeLength
@@ -121,32 +120,24 @@ open class CRBoxInputView: UIView, UICollectionViewDataSource, UICollectionViewD
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        if let didBecomeActiveObserver {
+            NotificationCenter.default.removeObserver(didBecomeActiveObserver)
+        }
     }
 
     private func initialize() {
         initDefaultValue()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(applicationWillResignActive(_:)),
-            name: UIApplication.willResignActiveNotification,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(applicationDidBecomeActive(_:)),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil
-        )
+        let center = NotificationCenter.default
+        didBecomeActiveObserver = center.addObserver(
+            forName: UIApplication.didBecomeActiveNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.reloadAllCell()
+        }
     }
 
-    @objc private func applicationWillResignActive(_ notification: Notification) {}
-
-    @objc private func applicationDidBecomeActive(_ notification: Notification) {
-        reloadAllCell()
-    }
-
-    /// Public customization point retained from the Objective-C implementation.
+    /// Public customization point retained from the original implementation.
     open func initDefaultValue() {
         oldLength = 0
         ifNeedSecurity = false
@@ -165,7 +156,6 @@ open class CRBoxInputView: UIView, UICollectionViewDataSource, UICollectionViewD
         loadAndPrepareView(beginEdit: true)
     }
 
-    @objc(loadAndPrepareViewWithBeginEdit:)
     open func loadAndPrepareView(beginEdit: Bool) {
         guard codeLength > 0 else {
             assertionFailure("请输入大于0的验证码位数")
@@ -201,11 +191,10 @@ open class CRBoxInputView: UIView, UICollectionViewDataSource, UICollectionViewD
     private func generateCellPropertyArr() {
         cellPropertyArr.removeAll()
         for _ in 0..<codeLength {
-            cellPropertyArr.append(customCellProperty.copy() as! CRBoxInputCellProperty)
+            cellPropertyArr.append(customCellProperty.copy())
         }
     }
 
-    @objc(resetCodeLength:beginEdit:)
     open func resetCodeLength(_ codeLength: Int, beginEdit: Bool) {
         guard codeLength > 0 else {
             assertionFailure("请输入大于0的验证码位数")
@@ -254,7 +243,6 @@ open class CRBoxInputView: UIView, UICollectionViewDataSource, UICollectionViewD
         clearAll(beginEdit: true)
     }
 
-    @objc(clearAllWithBeginEdit:)
     open func clearAll(beginEdit: Bool) {
         oldLength = 0
         valueArr.removeAll()
@@ -437,8 +425,7 @@ open class CRBoxInputView: UIView, UICollectionViewDataSource, UICollectionViewD
         customCellProperty.securitySymbol = (securitySymbol as NSString?)?.length == 1 ? securitySymbol! : "✱"
     }
 
-    /// Public subclassing hook retained from the Objective-C implementation.
-    @objc(customCollectionView:cellForItemAtIndexPath:)
+    /// Public subclassing hook retained from the original implementation.
     open func customCollectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath

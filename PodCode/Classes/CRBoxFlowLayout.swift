@@ -1,6 +1,5 @@
 import UIKit
 
-@objcMembers
 open class CRBoxFlowLayout: UICollectionViewFlowLayout {
     /// Whether the gaps between items should be calculated automatically. Default: `true`.
     public var ifNeedEqualGap = true

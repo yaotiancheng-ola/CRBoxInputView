@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-@objc public enum CRBoxSecurityType: Int {
+public enum CRBoxSecurityType: Int {
     case symbol
     case customView
 }
@@ -10,8 +10,7 @@ public typealias CustomSecurityViewBlock = () -> UIView
 public typealias CustomLineViewBlock = () -> CRLineView
 public typealias ConfigCellShadowBlock = (CALayer) -> Void
 
-@objcMembers
-open class CRBoxInputCellProperty: NSObject, NSCopying {
+open class CRBoxInputCellProperty {
     public var borderWidth: CGFloat = 0.5
     public var cellBorderColorNormal = UIColor(red: 228.0 / 255.0, green: 228.0 / 255.0, blue: 228.0 / 255.0, alpha: 1)
     public var cellBorderColorSelected = UIColor(red: 1, green: 70.0 / 255.0, blue: 62.0 / 255.0, alpha: 1)
@@ -42,36 +41,35 @@ open class CRBoxInputCellProperty: NSObject, NSCopying {
     public var configCellShadowBlock: ConfigCellShadowBlock?
     public var index = 0
 
-    public required override init() {
-        super.init()
+    public required init() {
         customSecurityViewBlock = { [weak self] in
             self?.defaultCustomSecurityView() ?? UIView()
         }
         customLineViewBlock = { CRLineView() }
     }
 
-    public func copy(with zone: NSZone? = nil) -> Any {
+    open func copy() -> CRBoxInputCellProperty {
         let copy = type(of: self).init()
         copy.borderWidth = borderWidth
-        copy.cellBorderColorNormal = cellBorderColorNormal.copy() as! UIColor
-        copy.cellBorderColorSelected = cellBorderColorSelected.copy() as! UIColor
-        copy.cellBorderColorFilled = cellBorderColorFilled?.copy() as? UIColor
-        copy.cellBgColorNormal = cellBgColorNormal.copy() as! UIColor
-        copy.cellBgColorSelected = cellBgColorSelected.copy() as! UIColor
-        copy.cellBgColorFilled = cellBgColorFilled?.copy() as? UIColor
-        copy.cellCursorColor = cellCursorColor.copy() as! UIColor
+        copy.cellBorderColorNormal = cellBorderColorNormal
+        copy.cellBorderColorSelected = cellBorderColorSelected
+        copy.cellBorderColorFilled = cellBorderColorFilled
+        copy.cellBgColorNormal = cellBgColorNormal
+        copy.cellBgColorSelected = cellBgColorSelected
+        copy.cellBgColorFilled = cellBgColorFilled
+        copy.cellCursorColor = cellCursorColor
         copy.cellCursorWidth = cellCursorWidth
         copy.cellCursorHeight = cellCursorHeight
         copy.cornerRadius = cornerRadius
         copy.showLine = showLine
         copy.cellFont = cellFont
-        copy.cellTextColor = cellTextColor.copy() as! UIColor
+        copy.cellTextColor = cellTextColor
         copy.ifShowSecurity = ifShowSecurity
         copy.securitySymbol = securitySymbol
         copy.originValue = originValue
         copy.securityType = securityType
         copy.cellPlaceholderText = cellPlaceholderText
-        copy.cellPlaceholderTextColor = cellPlaceholderTextColor.copy() as! UIColor
+        copy.cellPlaceholderTextColor = cellPlaceholderTextColor
         copy.cellPlaceholderFont = cellPlaceholderFont
         copy.customSecurityViewBlock = customSecurityViewBlock
         copy.customLineViewBlock = customLineViewBlock

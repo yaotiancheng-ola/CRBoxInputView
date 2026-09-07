@@ -1,5 +1,3 @@
-import Foundation
-
 enum CRBoxInputModelType: Int {
     case normal
     case placeholder
@@ -10,7 +8,7 @@ enum CRBoxInputModelType: Int {
     case secretView
 }
 
-final class CRBoxInputModel: NSObject {
+final class CRBoxInputModel {
     var name = ""
     var imageName = ""
     var type: CRBoxInputModelType = .normal

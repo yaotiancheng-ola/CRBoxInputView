@@ -4,7 +4,6 @@ import UIKit
 public let CRBoxCursoryAnimationKey = "CRBoxCursoryAnimationKey"
 public let CRBoxInputCellID = "CRBoxInputCellID"
 
-@objcMembers
 open class CRBoxInputCell: UICollectionViewCell {
     public var cursorView = UIView()
     public var ifNeedCursor = true

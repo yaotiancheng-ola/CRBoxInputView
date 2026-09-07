@@ -1,7 +1,6 @@
 import SnapKit
 import UIKit
 
-@objc(CRListViewController)
 final class CRListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private let mainTableView = UITableView()
     private let titleLabel = UILabel()

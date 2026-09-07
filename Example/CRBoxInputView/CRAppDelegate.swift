@@ -1,7 +1,6 @@
 import UIKit
 
 @main
-@objc(CRAppDelegate)
 final class CRAppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
